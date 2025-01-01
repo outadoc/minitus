@@ -21,7 +21,7 @@ internal fun VideotexBuilder.displayGameGrid(
             repeatChar(' ', startPadding)
 
             val diff =
-                fr.outadoc.minitus.diff.computeDiff(
+                computeDiff(
                     expectedWord = expectedWord,
                     guess = guess,
                 )
@@ -36,7 +36,7 @@ internal fun VideotexBuilder.displayGameGrid(
                 repeatChar(' ', startPadding)
 
                 displayDiffLine(
-                    fr.outadoc.minitus.diff.getHintForNextGuess(
+                    getHintForNextGuess(
                         expectedWord = expectedWord,
                         previousGuesses = guesses,
                     ),
