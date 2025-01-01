@@ -1,0 +1,32 @@
+name: Push service image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    permissions:
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: 21
+          distribution: "temurin"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Push Docker image
+        run: ./gradlew service:publishImage
+        env:
+          GHCR_USERNAME: token
+          GHCR_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
