@@ -22,11 +22,12 @@ fun Application.minitus() {
     minitelService<MinitusState>(
         path = "/",
         version = "0.1",
-        initialState =
+        initialState = {
             MinitusState.Playing(
                 guesses = emptyList(),
                 date = clock.now().toLocalDateTime(tz).date,
-            ),
+            )
+        },
     ) { request ->
         val nextState =
             request.state.reduce(
