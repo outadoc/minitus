@@ -34,7 +34,7 @@ internal fun VideotexBuilder.displayHeader(puzzleNumber: Int?) {
     if (puzzleNumber != null) {
         moveCursorTo(
             col = 37 - puzzleNumber.toString().length,
-            line = 2
+            line = 2,
         )
         withCharacterSize(CharacterSize.DoubleHeight) {
             append("#%d".format(puzzleNumber))
