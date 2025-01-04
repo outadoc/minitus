@@ -6,8 +6,9 @@ import fr.outadoc.minipavi.videotex.Color
 import fr.outadoc.minipavi.videotex.buildVideotex
 import fr.outadoc.minitus.GameConstants
 import fr.outadoc.minitus.dictionary.pickDailyWord
+import fr.outadoc.minitus.display.displayFooter
 import fr.outadoc.minitus.display.displayGameGrid
-import fr.outadoc.minitus.display.displayLogo
+import fr.outadoc.minitus.display.displayHeader
 import fr.outadoc.minitus.normalize
 
 internal fun playingScreen(
@@ -19,8 +20,8 @@ internal fun playingScreen(
         state = state,
         command =
             ServiceResponse.Command.InputText(
-                col = 24,
-                line = 24,
+                col = (40 - expectedWord.length) / 2,
+                line = 20,
                 length = expectedWord.length,
                 submitWith =
                     setOf(
@@ -31,7 +32,7 @@ internal fun playingScreen(
         content =
             buildVideotex {
                 clearAll()
-                displayLogo(
+                displayHeader(
                     puzzleNumber = state.puzzleNumber,
                 )
 
@@ -40,6 +41,15 @@ internal fun playingScreen(
                     expectedWord = expectedWord,
                     showExtraLines = true,
                 )
+
+                repeatChar(' ', 9)
+                append("Entrez un mot + ")
+                withInvertedBackground {
+                    appendLine("ENVOI")
+                }
+
+                appendLine()
+                appendLine()
 
                 if (state.lastInputError != null) {
                     withTextColor(Color.Red) {
@@ -57,11 +67,7 @@ internal fun playingScreen(
                     }
                 }
 
-                moveCursorTo(1, 24)
-                append("Entrez un mot + ")
-                withInvertedBackground {
-                    appendLine("ENVOI")
-                }
+                displayFooter()
             },
     )
 }

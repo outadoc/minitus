@@ -4,8 +4,9 @@ import fr.outadoc.minipavi.core.model.ServiceResponse
 import fr.outadoc.minipavi.videotex.Color
 import fr.outadoc.minipavi.videotex.buildVideotex
 import fr.outadoc.minitus.dictionary.pickDailyWord
+import fr.outadoc.minitus.display.displayFooter
 import fr.outadoc.minitus.display.displayGameGrid
-import fr.outadoc.minitus.display.displayLogo
+import fr.outadoc.minitus.display.displayHeader
 
 internal fun loseScreen(
     state: MinitusState.Lose,
@@ -17,7 +18,7 @@ internal fun loseScreen(
         content =
             buildVideotex {
                 clearAll()
-                displayLogo(
+                displayHeader(
                     puzzleNumber = state.puzzleNumber,
                 )
 
@@ -36,6 +37,8 @@ internal fun loseScreen(
                         appendLine(expectedWord)
                     }
                 }
+
+                displayFooter()
             },
     )
 }

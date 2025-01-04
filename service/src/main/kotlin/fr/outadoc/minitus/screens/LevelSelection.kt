@@ -4,7 +4,7 @@ import fr.outadoc.minipavi.core.model.ServiceResponse
 import fr.outadoc.minipavi.videotex.Color
 import fr.outadoc.minipavi.videotex.buildVideotex
 import fr.outadoc.minitus.dictionary.getPuzzleNumber
-import fr.outadoc.minitus.display.displayLogo
+import fr.outadoc.minitus.display.displayHeader
 import fr.outadoc.minitus.today
 
 fun levelSelectionScreen(state: MinitusState.LevelSelection): ServiceResponse<MinitusState> {
@@ -21,7 +21,7 @@ fun levelSelectionScreen(state: MinitusState.LevelSelection): ServiceResponse<Mi
         content =
             buildVideotex {
                 clearAll()
-                displayLogo(puzzleNumber = null)
+                displayHeader(puzzleNumber = null)
 
                 appendLine("Sélection de niveau")
                 appendLine()
@@ -33,18 +33,18 @@ fun levelSelectionScreen(state: MinitusState.LevelSelection): ServiceResponse<Mi
                 appendLine()
                 appendLine()
 
-                withTextColor(Color.Red) {
-                    when (state.error) {
-                        MinitusState.LevelSelection.Error.InvalidLevelFormat -> {
-                            appendLine("Niveau invalide.")
-                            appendLine("Veuillez entrer un nombre.")
-                        }
+                if (state.error != null) {
+                    withTextColor(Color.Red) {
+                        when (state.error) {
+                            MinitusState.LevelSelection.Error.InvalidLevelFormat -> {
+                                appendLine("Niveau invalide.")
+                                appendLine("Veuillez entrer un nombre.")
+                            }
 
-                        MinitusState.LevelSelection.Error.InvalidLevelRange -> {
-                            appendLine("Ce niveau n'est pas encore disponible.")
+                            MinitusState.LevelSelection.Error.InvalidLevelRange -> {
+                                appendLine("Ce niveau n'est pas encore disponible.")
+                            }
                         }
-
-                        null -> {}
                     }
                 }
             },

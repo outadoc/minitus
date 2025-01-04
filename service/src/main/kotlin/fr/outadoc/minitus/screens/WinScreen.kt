@@ -4,8 +4,9 @@ import fr.outadoc.minipavi.core.model.ServiceResponse
 import fr.outadoc.minipavi.videotex.Color
 import fr.outadoc.minipavi.videotex.buildVideotex
 import fr.outadoc.minitus.dictionary.pickDailyWord
+import fr.outadoc.minitus.display.displayFooter
 import fr.outadoc.minitus.display.displayGameGrid
-import fr.outadoc.minitus.display.displayLogo
+import fr.outadoc.minitus.display.displayHeader
 
 internal fun winScreen(
     state: MinitusState.Win,
@@ -17,7 +18,7 @@ internal fun winScreen(
         content =
             buildVideotex {
                 clearAll()
-                displayLogo(
+                displayHeader(
                     puzzleNumber = state.puzzleNumber,
                 )
 
@@ -30,6 +31,8 @@ internal fun winScreen(
                 withTextColor(Color.Green) {
                     appendLine("C'est gagné !")
                 }
+
+                displayFooter()
             },
     )
 }

@@ -4,7 +4,7 @@ import fr.outadoc.minipavi.videotex.CharacterSize
 import fr.outadoc.minipavi.videotex.Color
 import fr.outadoc.minipavi.videotex.VideotexBuilder
 
-internal fun VideotexBuilder.displayLogo(puzzleNumber: Int?) {
+internal fun VideotexBuilder.displayHeader(puzzleNumber: Int?) {
     moveCursorTo(14, 2)
 
     withCharacterSize(CharacterSize.DoubleSize) {
@@ -29,9 +29,7 @@ internal fun VideotexBuilder.displayLogo(puzzleNumber: Int?) {
         appendLine()
     }
 
-    withUnderline {
-        repeatChar(' ', 39)
-    }
+    repeatChar('_', 40)
 
     if (puzzleNumber != null) {
         moveCursorTo(col = 35, line = 2)
