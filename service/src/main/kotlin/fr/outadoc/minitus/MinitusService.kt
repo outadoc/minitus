@@ -4,20 +4,14 @@ import fr.outadoc.minipavi.core.ktor.minitelService
 import fr.outadoc.minitus.dictionary.getPuzzleNumber
 import fr.outadoc.minitus.dictionary.readWords
 import fr.outadoc.minitus.screens.MinitusState
+import fr.outadoc.minitus.screens.levelSelectionScreen
 import fr.outadoc.minitus.screens.loseScreen
 import fr.outadoc.minitus.screens.playingScreen
 import fr.outadoc.minitus.screens.reduce
 import fr.outadoc.minitus.screens.winScreen
 import io.ktor.server.application.Application
-import kotlinx.datetime.Clock
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 
 fun Application.minitus() {
-    val clock = Clock.System
-    val tz = TimeZone.of("Europe/Paris")
-
     val dictionary: Set<String> = readWords(environment)
 
     minitelService<MinitusState>(
@@ -26,13 +20,14 @@ fun Application.minitus() {
         initialState = {
             MinitusState.Playing(
                 guesses = emptyList(),
-                puzzleNumber = clock.today(at = tz).getPuzzleNumber(),
+                puzzleNumber = today().getPuzzleNumber(),
             )
         },
     ) { request ->
         val nextState =
             request.state.reduce(
                 userInput = request.userInput.firstOrNull().orEmpty(),
+                function = request.function,
                 dictionary = dictionary,
             )
 
@@ -57,10 +52,12 @@ fun Application.minitus() {
                     dictionary = dictionary,
                 )
             }
+
+            is MinitusState.LevelSelection -> {
+                levelSelectionScreen(
+                    state = nextState,
+                )
+            }
         }
     }
-}
-
-private fun Clock.today(at: TimeZone): LocalDate {
-    return now().toLocalDateTime(at).date
 }

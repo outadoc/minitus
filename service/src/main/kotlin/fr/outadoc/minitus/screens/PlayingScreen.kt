@@ -1,6 +1,7 @@
 package fr.outadoc.minitus.screens
 
 import fr.outadoc.minipavi.core.model.ServiceResponse
+import fr.outadoc.minipavi.core.model.ServiceResponse.Command.FunctionKey
 import fr.outadoc.minipavi.videotex.Color
 import fr.outadoc.minipavi.videotex.buildVideotex
 import fr.outadoc.minitus.GameConstants
@@ -21,6 +22,11 @@ internal fun playingScreen(
                 col = 24,
                 line = 24,
                 length = expectedWord.length,
+                submitWith =
+                    setOf(
+                        FunctionKey.Envoi,
+                        FunctionKey.Sommaire,
+                    ),
             ),
         content =
             buildVideotex {
@@ -38,13 +44,13 @@ internal fun playingScreen(
                 if (state.lastInputError != null) {
                     withTextColor(Color.Red) {
                         when (state.lastInputError) {
-                            MinitusState.Error.InvalidLength -> {
+                            MinitusState.Playing.Error.InvalidLength -> {
                                 appendLine(
                                     "Entrez un mot de ${expectedWord.length} lettres.",
                                 )
                             }
 
-                            MinitusState.Error.NotInDictionary -> {
+                            MinitusState.Playing.Error.NotInDictionary -> {
                                 appendLine("Je ne connais pas ce mot.")
                             }
                         }
@@ -76,13 +82,13 @@ internal fun MinitusState.Playing.reduce(
 
     if (inputWord.length != expectedWord.length) {
         return copy(
-            lastInputError = MinitusState.Error.InvalidLength,
+            lastInputError = MinitusState.Playing.Error.InvalidLength,
         )
     }
 
     if (inputWord !in dictionary) {
         return copy(
-            lastInputError = MinitusState.Error.NotInDictionary,
+            lastInputError = MinitusState.Playing.Error.NotInDictionary,
         )
     }
 
