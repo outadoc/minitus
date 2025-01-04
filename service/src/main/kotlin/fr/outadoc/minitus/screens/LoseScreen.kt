@@ -15,7 +15,9 @@ internal fun loseScreen(
         content =
             buildVideotex {
                 clearAll()
-                displayLogo()
+                displayLogo(
+                    puzzleNumber = state.puzzleNumber,
+                )
 
                 displayGameGrid(
                     guesses = state.guesses,

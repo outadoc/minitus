@@ -4,7 +4,7 @@ import fr.outadoc.minipavi.videotex.CharacterSize
 import fr.outadoc.minipavi.videotex.Color
 import fr.outadoc.minipavi.videotex.VideotexBuilder
 
-internal fun VideotexBuilder.displayLogo() {
+internal fun VideotexBuilder.displayLogo(puzzleNumber: Int?) {
     moveCursorTo(14, 2)
 
     withCharacterSize(CharacterSize.DoubleSize) {
@@ -33,6 +33,12 @@ internal fun VideotexBuilder.displayLogo() {
         repeatChar(' ', 39)
     }
 
-    appendLine()
-    appendLine()
+    if (puzzleNumber != null) {
+        moveCursorTo(col = 35, line = 2)
+        withCharacterSize(CharacterSize.DoubleHeight) {
+            append("#%02d".format(puzzleNumber))
+        }
+    }
+
+    moveCursorTo(col = 1, line = 5)
 }

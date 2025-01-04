@@ -1,6 +1,7 @@
 package fr.outadoc.minitus
 
 import fr.outadoc.minipavi.core.ktor.minitelService
+import fr.outadoc.minitus.dictionary.getPuzzleNumber
 import fr.outadoc.minitus.dictionary.pickDailyWord
 import fr.outadoc.minitus.dictionary.readWords
 import fr.outadoc.minitus.screens.MinitusState
@@ -10,6 +11,7 @@ import fr.outadoc.minitus.screens.reduce
 import fr.outadoc.minitus.screens.winScreen
 import io.ktor.server.application.Application
 import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
@@ -25,18 +27,18 @@ fun Application.minitus() {
         initialState = {
             MinitusState.Playing(
                 guesses = emptyList(),
-                date = clock.now().toLocalDateTime(tz).date,
+                puzzleNumber = clock.today(at = tz).getPuzzleNumber(),
             )
         },
     ) { request ->
         val nextState =
             request.state.reduce(
-                date = request.state.date,
+                puzzleNumber = request.state.puzzleNumber,
                 userInput = request.userInput.firstOrNull() ?: "",
                 dictionary = dictionary,
             )
 
-        val expectedWord = dictionary.pickDailyWord(nextState.date)
+        val expectedWord = dictionary.pickDailyWord(nextState.puzzleNumber)
 
         when (nextState) {
             is MinitusState.Playing -> {
@@ -61,4 +63,8 @@ fun Application.minitus() {
             }
         }
     }
+}
+
+private fun Clock.today(at: TimeZone): LocalDate {
+    return now().toLocalDateTime(at).date
 }

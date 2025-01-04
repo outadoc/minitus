@@ -8,7 +8,6 @@ import fr.outadoc.minitus.dictionary.pickDailyWord
 import fr.outadoc.minitus.display.displayGameGrid
 import fr.outadoc.minitus.display.displayLogo
 import fr.outadoc.minitus.normalize
-import kotlinx.datetime.LocalDate
 
 internal fun playingScreen(
     state: MinitusState.Playing,
@@ -25,7 +24,9 @@ internal fun playingScreen(
         content =
             buildVideotex {
                 clearAll()
-                displayLogo()
+                displayLogo(
+                    puzzleNumber = state.puzzleNumber,
+                )
 
                 displayGameGrid(
                     guesses = state.guesses,
@@ -58,7 +59,7 @@ internal fun playingScreen(
     )
 
 internal fun MinitusState.Playing.reduce(
-    date: LocalDate,
+    puzzleNumber: Int,
     userInput: String,
     dictionary: Set<String>,
 ): MinitusState {
@@ -85,14 +86,14 @@ internal fun MinitusState.Playing.reduce(
 
     if (inputWord == expectedWord) {
         return MinitusState.Win(
-            date = date,
+            puzzleNumber = puzzleNumber,
             guesses = guesses + inputWord,
         )
     }
 
     if (guesses.size >= GameConstants.MAX_ATTEMPTS - 1) {
         return MinitusState.Lose(
-            date = date,
+            puzzleNumber = puzzleNumber,
             guesses = guesses + inputWord,
         )
     }
