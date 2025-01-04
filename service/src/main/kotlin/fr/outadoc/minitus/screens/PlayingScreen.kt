@@ -69,7 +69,9 @@ internal fun MinitusState.Playing.reduce(
         )
     }
 
-    if (inputWord.length !in GameConstants.ALLOWED_WORD_LENGTHS) {
+    val expectedWord = dictionary.pickDailyWord(puzzleNumber)
+
+    if (inputWord.length != expectedWord.length) {
         return copy(
             lastInputError = MinitusState.Error.InvalidLength,
         )
@@ -80,8 +82,6 @@ internal fun MinitusState.Playing.reduce(
             lastInputError = MinitusState.Error.NotInDictionary,
         )
     }
-
-    val expectedWord = dictionary.pickDailyWord(date)
 
     if (inputWord == expectedWord) {
         return MinitusState.Win(
