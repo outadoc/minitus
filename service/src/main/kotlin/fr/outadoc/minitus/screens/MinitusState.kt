@@ -5,29 +5,26 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 sealed interface MinitusState {
-    val puzzleNumber: Int
-    val guesses: List<String>
-
     @Serializable
     @SerialName("intro")
     data class Playing(
-        override val puzzleNumber: Int,
-        override val guesses: List<String>,
+        val puzzleNumber: Int,
+        val guesses: List<String>,
         val lastInputError: Error? = null,
     ) : MinitusState
 
     @Serializable
     @SerialName("win")
     data class Win(
-        override val puzzleNumber: Int,
-        override val guesses: List<String>,
+        val puzzleNumber: Int,
+        val guesses: List<String>,
     ) : MinitusState
 
     @Serializable
     @SerialName("lose")
     data class Lose(
-        override val puzzleNumber: Int,
-        override val guesses: List<String>,
+        val puzzleNumber: Int,
+        val guesses: List<String>,
     ) : MinitusState
 
     @Serializable
@@ -41,7 +38,6 @@ sealed interface MinitusState {
 }
 
 internal fun MinitusState.reduce(
-    puzzleNumber: Int,
     userInput: String,
     dictionary: Set<String>,
 ): MinitusState {

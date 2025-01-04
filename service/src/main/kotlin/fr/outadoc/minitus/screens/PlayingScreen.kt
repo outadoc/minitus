@@ -11,9 +11,10 @@ import fr.outadoc.minitus.normalize
 
 internal fun playingScreen(
     state: MinitusState.Playing,
-    expectedWord: String,
-): ServiceResponse<MinitusState> =
-    ServiceResponse(
+    dictionary: Set<String>,
+): ServiceResponse<MinitusState> {
+    val expectedWord = dictionary.pickDailyWord(state.puzzleNumber)
+    return ServiceResponse(
         state = state,
         command =
             ServiceResponse.Command.InputText(
@@ -57,6 +58,7 @@ internal fun playingScreen(
                 }
             },
     )
+}
 
 internal fun MinitusState.Playing.reduce(
     puzzleNumber: Int,

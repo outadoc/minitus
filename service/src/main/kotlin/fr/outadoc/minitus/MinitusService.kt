@@ -2,7 +2,6 @@ package fr.outadoc.minitus
 
 import fr.outadoc.minipavi.core.ktor.minitelService
 import fr.outadoc.minitus.dictionary.getPuzzleNumber
-import fr.outadoc.minitus.dictionary.pickDailyWord
 import fr.outadoc.minitus.dictionary.readWords
 import fr.outadoc.minitus.screens.MinitusState
 import fr.outadoc.minitus.screens.loseScreen
@@ -33,32 +32,29 @@ fun Application.minitus() {
     ) { request ->
         val nextState =
             request.state.reduce(
-                puzzleNumber = request.state.puzzleNumber,
-                userInput = request.userInput.firstOrNull() ?: "",
+                userInput = request.userInput.firstOrNull().orEmpty(),
                 dictionary = dictionary,
             )
-
-        val expectedWord = dictionary.pickDailyWord(nextState.puzzleNumber)
 
         when (nextState) {
             is MinitusState.Playing -> {
                 playingScreen(
                     state = nextState,
-                    expectedWord = expectedWord,
+                    dictionary = dictionary,
                 )
             }
 
             is MinitusState.Lose -> {
                 loseScreen(
                     state = nextState,
-                    expectedWord = expectedWord,
+                    dictionary = dictionary,
                 )
             }
 
             is MinitusState.Win -> {
                 winScreen(
                     state = nextState,
-                    expectedWord = expectedWord,
+                    dictionary = dictionary,
                 )
             }
         }
