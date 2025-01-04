@@ -32,9 +32,12 @@ internal fun VideotexBuilder.displayHeader(puzzleNumber: Int?) {
     repeatChar('_', 40)
 
     if (puzzleNumber != null) {
-        moveCursorTo(col = 35, line = 2)
+        moveCursorTo(
+            col = 37 - puzzleNumber.toString().length,
+            line = 2
+        )
         withCharacterSize(CharacterSize.DoubleHeight) {
-            append("#%02d".format(puzzleNumber))
+            append("#%d".format(puzzleNumber))
         }
     }
 
