@@ -1,6 +1,7 @@
 package fr.outadoc.minitus.screens
 
 import fr.outadoc.minipavi.core.model.ServiceResponse
+import fr.outadoc.minipavi.videotex.CharacterSize
 import fr.outadoc.minipavi.videotex.Color
 import fr.outadoc.minipavi.videotex.buildVideotex
 import fr.outadoc.minitus.dictionary.pickDailyWord
@@ -29,7 +30,14 @@ internal fun loseScreen(
                 )
 
                 withTextColor(Color.Red) {
-                    appendLine("Perdu :(")
+                    withInvertedBackground {
+                        withCharacterSize(CharacterSize.DoubleHeight) {
+                            repeatChar(' ', 17)
+                            append("Perdu :(")
+                            repeatChar(' ', 15)
+                        }
+                    }
+
                     appendLine()
 
                     append("Le mot était ")

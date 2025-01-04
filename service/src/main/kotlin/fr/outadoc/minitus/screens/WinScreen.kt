@@ -1,6 +1,7 @@
 package fr.outadoc.minitus.screens
 
 import fr.outadoc.minipavi.core.model.ServiceResponse
+import fr.outadoc.minipavi.videotex.CharacterSize
 import fr.outadoc.minipavi.videotex.Color
 import fr.outadoc.minipavi.videotex.buildVideotex
 import fr.outadoc.minitus.dictionary.pickDailyWord
@@ -29,7 +30,13 @@ internal fun winScreen(
                 )
 
                 withTextColor(Color.Green) {
-                    appendLine("C'est gagné !")
+                    withInvertedBackground {
+                        withCharacterSize(CharacterSize.DoubleHeight) {
+                            repeatChar(' ', 14)
+                            append("C'EST GAGNÉ !")
+                            repeatChar(' ', 13)
+                        }
+                    }
                 }
 
                 displayFooter()
