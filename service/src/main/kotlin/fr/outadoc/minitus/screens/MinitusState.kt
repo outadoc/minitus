@@ -18,6 +18,9 @@ sealed interface MinitusState {
 
             @Serializable
             data object InvalidLength : Error
+
+            @Serializable
+            data object InvalidFirstLetter : Error
         }
     }
 

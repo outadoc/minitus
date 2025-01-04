@@ -63,6 +63,10 @@ internal fun playingScreen(
                             MinitusState.Playing.Error.NotInDictionary -> {
                                 appendLine("Je ne connais pas ce mot.")
                             }
+
+                            MinitusState.Playing.Error.InvalidFirstLetter -> {
+                                appendLine("Le mot doit commencer par ${expectedWord.first()}.")
+                            }
                         }
                     }
                 }
@@ -95,6 +99,12 @@ internal fun MinitusState.Playing.reduce(
     if (inputWord !in dictionary) {
         return copy(
             lastInputError = MinitusState.Playing.Error.NotInDictionary,
+        )
+    }
+
+    if (inputWord.first() != expectedWord.first()) {
+        return copy(
+            lastInputError = MinitusState.Playing.Error.InvalidFirstLetter,
         )
     }
 
