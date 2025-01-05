@@ -1,6 +1,7 @@
 package fr.outadoc.minitus.screens
 
 import fr.outadoc.minipavi.core.model.ServiceResponse
+import fr.outadoc.minipavi.videotex.CharacterSize
 import fr.outadoc.minipavi.videotex.Color
 import fr.outadoc.minipavi.videotex.buildVideotex
 import fr.outadoc.minitus.dictionary.getPuzzleNumber
@@ -14,7 +15,7 @@ fun levelSelectionScreen(state: MinitusState.LevelSelection): ServiceResponse<Mi
         command =
             ServiceResponse.Command.InputText(
                 col = 1,
-                line = 11,
+                line = 10,
                 length = latestPuzzle.toString().length,
             ),
         state = state,
@@ -23,12 +24,12 @@ fun levelSelectionScreen(state: MinitusState.LevelSelection): ServiceResponse<Mi
                 clearAll()
                 displayHeader(puzzleNumber = null)
 
-                appendLine("Sélection de niveau")
                 appendLine()
-                appendLine("Niveaux disponibles :")
-                appendLine("1 à $latestPuzzle")
+                withCharacterSize(CharacterSize.DoubleHeight) {
+                    appendLine("Sélection de niveau")
+                }
                 appendLine()
-                appendLine("Entrez un niveau :")
+                appendLine("Entrez un niveau (1 - $latestPuzzle)")
 
                 appendLine()
                 appendLine()
