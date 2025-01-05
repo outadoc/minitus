@@ -8,8 +8,10 @@ private const val SEED = 1370784130107967936L
 private val EPOCH = LocalDate(2024, 12, 31)
 
 internal fun LocalDate.getPuzzleNumber(): Int {
-    check(this >= EPOCH) {
-        "La date d'aujourd'hui précède le $EPOCH et n'a pas de puzzle correspondant."
+    if (this < EPOCH) {
+        throw IllegalArgumentException(
+            "La date d'aujourd'hui précède le $EPOCH et n'a pas de puzzle correspondant.",
+        )
     }
 
     val daysSinceEpoch: Int = (this - EPOCH).days

@@ -1,5 +1,6 @@
 package fr.outadoc.minitus.screens
 
+import fr.outadoc.minipavi.core.model.FunctionKey
 import fr.outadoc.minipavi.core.model.GatewayRequest
 import kotlinx.serialization.Serializable
 
@@ -53,10 +54,10 @@ sealed interface MinitusState {
 
 internal fun MinitusState.reduce(
     userInput: String,
-    function: GatewayRequest.Function,
+    event: GatewayRequest.Event,
     dictionary: Set<String>,
 ): MinitusState {
-    if (function == GatewayRequest.Function.Sommaire) {
+    if (event is GatewayRequest.Event.KeyboardInput && event.key == FunctionKey.Sommaire) {
         return MinitusState.LevelSelection()
     }
 

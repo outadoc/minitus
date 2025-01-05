@@ -27,7 +27,7 @@ fun Application.minitus() {
         val nextState =
             request.state.reduce(
                 userInput = request.userInput.firstOrNull().orEmpty(),
-                function = request.function,
+                event = request.event,
                 dictionary = dictionary,
             )
 

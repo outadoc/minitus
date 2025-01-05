@@ -1,7 +1,7 @@
 package fr.outadoc.minitus.screens
 
+import fr.outadoc.minipavi.core.model.FunctionKey
 import fr.outadoc.minipavi.core.model.ServiceResponse
-import fr.outadoc.minipavi.core.model.ServiceResponse.Command.FunctionKey
 import fr.outadoc.minipavi.videotex.Color
 import fr.outadoc.minipavi.videotex.buildVideotex
 import fr.outadoc.minitus.GameConstants
