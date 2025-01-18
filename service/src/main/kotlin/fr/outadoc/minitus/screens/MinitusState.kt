@@ -22,6 +22,9 @@ sealed interface MinitusState {
 
             @Serializable
             data object InvalidFirstLetter : Error
+
+            @Serializable
+            data object AlreadyPlayed : Error
         }
     }
 

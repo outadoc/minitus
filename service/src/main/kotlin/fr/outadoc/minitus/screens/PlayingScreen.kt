@@ -67,6 +67,10 @@ internal fun playingScreen(
                             MinitusState.Playing.Error.InvalidFirstLetter -> {
                                 appendLine("Le mot doit commencer par ${expectedWord.first()}.")
                             }
+
+                            MinitusState.Playing.Error.AlreadyPlayed -> {
+                                appendLine("Ce mot a déjà été joué.")
+                            }
                         }
                     }
                 }
@@ -105,6 +109,12 @@ internal fun MinitusState.Playing.reduce(
     if (inputWord.first() != expectedWord.first()) {
         return copy(
             lastInputError = MinitusState.Playing.Error.InvalidFirstLetter,
+        )
+    }
+
+    if (inputWord in guesses) {
+        return copy(
+            lastInputError = MinitusState.Playing.Error.AlreadyPlayed,
         )
     }
 
