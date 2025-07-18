@@ -1,7 +1,8 @@
 package fr.outadoc.minitus.dictionary
 
+import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.minus
+import kotlinx.datetime.until
 import kotlin.random.Random
 
 private const val SEED = 1370784130107967936L
@@ -14,7 +15,7 @@ internal fun LocalDate.getPuzzleNumber(): Int {
         )
     }
 
-    val daysSinceEpoch: Int = (this - EPOCH).days
+    val daysSinceEpoch: Int = EPOCH.until(this, DateTimeUnit.DAY)
     return daysSinceEpoch
 }
 

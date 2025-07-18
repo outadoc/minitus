@@ -54,4 +54,14 @@ class PuzzlePickerTest {
             date.getPuzzleNumber()
         }
     }
+
+    @Test
+    fun `On a known date, the puzzle number is known`() {
+        val today = LocalDate(2025, 7, 18)
+
+        assertEquals(
+            expected = 199,
+            actual = today.getPuzzleNumber()
+        )
+    }
 }
