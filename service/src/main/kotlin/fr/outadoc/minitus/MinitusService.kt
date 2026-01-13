@@ -10,9 +10,18 @@ import fr.outadoc.minitus.screens.playingScreen
 import fr.outadoc.minitus.screens.reduce
 import fr.outadoc.minitus.screens.winScreen
 import io.ktor.server.application.Application
+import io.ktor.server.response.respond
+import io.ktor.server.routing.get
+import io.ktor.server.routing.routing
 
 fun Application.minitus() {
     val dictionary: Set<String> = readWords(environment)
+
+    routing {
+        get("/status") {
+            call.respond("OK")
+        }
+    }
 
     minitelService<MinitusState>(
         path = "/",
