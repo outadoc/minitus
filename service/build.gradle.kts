@@ -37,17 +37,12 @@ ktor {
 }
 
 dependencies {
-    implementation(libs.minipavi.core)
-    implementation(libs.minipavi.videotex)
+    implementation(projects.shared)
+    implementation(libs.minipavi.core.ktor)
 
     implementation(libs.logback)
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.netty)
-    implementation(libs.kotlinx.datetime)
-    implementation(libs.kotlinx.serialization.json)
-
-    testImplementation(libs.kotlin.test)
-    testImplementation(libs.kotlin.test.junit)
 }
 
 spotless {

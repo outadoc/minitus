@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "cd .. && ./gradlew :worker:workerDistribution",
+    "dev": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "4.165.0"
+  },
+  "dependencies": {
+    "@js-joda/core": "3.2.0"
+  }
+}
