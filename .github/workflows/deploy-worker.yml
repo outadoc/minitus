@@ -3,9 +3,12 @@ name: Deploy Cloudflare Worker
 # Déploie le Worker à chaque push sur main une fois la variable de dépôt DEPLOY_WORKER
 # passée à "true", ou à la demande depuis l'onglet Actions.
 #
-# Secrets requis :
+# Le job s'exécute dans l'environnement GitHub Actions « production », qui porte les secrets :
 #   - CLOUDFLARE_API_TOKEN : jeton d'API Cloudflare avec la permission « Workers Scripts: Edit »
 #   - CLOUDFLARE_ACCOUNT_ID : identifiant du compte Cloudflare
+#
+# DEPLOY_WORKER reste une variable de dépôt : la condition `if` d'un job est évaluée avant que
+# son environnement ne soit chargé, elle ne peut donc pas lire les variables d'environnement.
 
 on:
   push:
@@ -26,6 +29,8 @@ jobs:
     if: github.event_name == 'workflow_dispatch' || vars.DEPLOY_WORKER == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
+
+    environment: production
 
     defaults:
       run:
