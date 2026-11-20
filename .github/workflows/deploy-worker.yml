@@ -59,10 +59,23 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Deploy
-        run: npm run deploy
+      - name: Build
+        run: npm run build
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy
+        # Au premier déploiement d'un Worker, wrangler crée le script puis lit aussitôt sa
+        # configuration workers.dev via l'API /workers/workers/<nom>, qui peut ne pas encore le
+        # connaître et répondre « This Worker does not exist on your account » (code 10007).
+        # wrangler ne réessaie pas cette erreur : on relance donc le déploiement une fois.
+        run: |
+          if ! npx wrangler deploy; then
+            echo "::warning::Échec du déploiement, nouvelle tentative dans 15 secondes."
+            sleep 15
+            npx wrangler deploy
+          fi
+        env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

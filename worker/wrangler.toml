@@ -2,6 +2,9 @@ name = "minitus"
 main = "worker/index.mjs"
 compatibility_date = "2026-11-01"
 
+# Publie le Worker sur https://minitus.<sous-domaine>.workers.dev
+workers_dev = true
+
 # Embarque la liste de mots générée par Gradle en tant que module texte.
 [[rules]]
 type = "Text"
