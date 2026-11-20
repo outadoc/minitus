@@ -7,7 +7,7 @@ package fr.outadoc.minitus
 internal expect fun String.toNfd(): String
 
 // Bloc Unicode « Combining Diacritical Marks »
-private val COMBINING_DIACRITICAL_MARKS = '̀'..'ͯ'
+private val COMBINING_DIACRITICAL_MARKS = '\u0300'..'\u036F'
 
 internal fun String.normalize(): String {
     // On normalise la chaîne de caractères en NFD,

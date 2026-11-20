@@ -21,6 +21,12 @@ kotlin {
             }
         }
 
+        jsMain {
+            dependencies {
+                implementation(npm("@js-joda/timezone", "2.23.0"))
+            }
+        }
+
         commonTest {
             dependencies {
                 implementation(libs.kotlin.test)
