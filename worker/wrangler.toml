@@ -1,0 +1,12 @@
+name = "minitus"
+main = "worker/index.mjs"
+compatibility_date = "2026-11-01"
+
+# Embarque la liste de mots générée par Gradle en tant que module texte.
+[[rules]]
+type = "Text"
+globs = ["**/*.txt"]
+fallthrough = false
+
+[observability]
+enabled = true
