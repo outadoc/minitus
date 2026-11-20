@@ -4,13 +4,12 @@ import fr.outadoc.minipavi.core.model.ServiceResponse
 import fr.outadoc.minipavi.videotex.CharacterSize
 import fr.outadoc.minipavi.videotex.Color
 import fr.outadoc.minipavi.videotex.buildVideotex
-import fr.outadoc.minitus.dictionary.getPuzzleNumber
 import fr.outadoc.minitus.display.displayHeader
-import fr.outadoc.minitus.today
 
-fun levelSelectionScreen(state: MinitusState.LevelSelection): ServiceResponse<MinitusState> {
-    val latestPuzzle: Int = today().getPuzzleNumber()
-
+internal fun levelSelectionScreen(
+    state: MinitusState.LevelSelection,
+    latestPuzzle: Int,
+): ServiceResponse<MinitusState> {
     return ServiceResponse(
         command =
             ServiceResponse.Command.InputText(
@@ -52,9 +51,11 @@ fun levelSelectionScreen(state: MinitusState.LevelSelection): ServiceResponse<Mi
     )
 }
 
-internal fun MinitusState.LevelSelection.reduce(userInput: String): MinitusState {
+internal fun MinitusState.LevelSelection.reduce(
+    userInput: String,
+    latestPuzzle: Int,
+): MinitusState {
     val inputLevel = userInput.toIntOrNull()
-    val latestPuzzle: Int = today().getPuzzleNumber()
 
     if (inputLevel == null) {
         return copy(

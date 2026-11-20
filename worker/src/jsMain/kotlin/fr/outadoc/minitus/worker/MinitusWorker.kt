@@ -12,22 +12,20 @@ import fr.outadoc.minipavi.core.cloudflare.toFetchHandler
 import fr.outadoc.minitus.Minitus
 import fr.outadoc.minitus.dictionary.Dictionary
 import fr.outadoc.minitus.screens.MinitusState
+import kotlinx.datetime.Clock
 import kotlin.js.Promise
 
-private var dictionary: Dictionary? = null
+private var minitus: Minitus? = null
 
 private val logger = ConsoleMinitelLogger()
 
 private val handler =
     MinitelServiceHandler<MinitusState>(
         version = Minitus.VERSION,
-        initialState = Minitus::initialState,
+        initialState = { requireMinitus().initialState() },
         logger = logger,
     ) { request ->
-        Minitus.handle(
-            request = request,
-            dictionary = checkNotNull(dictionary) { "initDictionary() n'a pas été appelée" },
-        )
+        requireMinitus().handle(request)
     }.toFetchHandler(path = "/", logger = logger)
 
 /**
@@ -39,10 +37,12 @@ private val handler =
  */
 @JsExport
 fun initDictionary(wordList: String) {
-    val loaded = Dictionary.fromWordList(wordList)
-    loaded.pickDailyWord(0)
-    dictionary = loaded
+    val dictionary = Dictionary.fromWordList(wordList)
+    dictionary.pickDailyWord(0)
+    minitus = Minitus(dictionary = dictionary, clock = Clock.System)
 }
+
+private fun requireMinitus(): Minitus = checkNotNull(minitus) { "initDictionary() n'a pas été appelée" }
 
 /**
  * Point d'entrée du Worker, réexporté par `worker/index.mjs`.

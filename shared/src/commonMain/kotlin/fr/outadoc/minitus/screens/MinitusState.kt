@@ -60,6 +60,7 @@ internal fun MinitusState.reduce(
     userInput: String,
     event: GatewayRequest.Event,
     dictionary: Dictionary,
+    latestPuzzle: Int,
 ): MinitusState {
     if (event is GatewayRequest.Event.KeyboardInput && event.key == FunctionKey.Sommaire) {
         return MinitusState.LevelSelection()
@@ -77,6 +78,7 @@ internal fun MinitusState.reduce(
         is MinitusState.LevelSelection -> {
             reduce(
                 userInput = userInput,
+                latestPuzzle = latestPuzzle,
             )
         }
 

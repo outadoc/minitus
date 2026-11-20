@@ -7,10 +7,13 @@ import io.ktor.server.application.Application
 import io.ktor.server.response.respond
 import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
+import kotlinx.datetime.Clock
 
 fun Application.minitus() {
     val dictionary: Dictionary = Dictionary.loadFromResources()
     environment.log.info("Chargé ${dictionary.size} mots avec succès")
+
+    val minitus = Minitus(dictionary = dictionary, clock = Clock.System)
 
     routing {
         get("/status") {
@@ -21,11 +24,8 @@ fun Application.minitus() {
     minitelService<MinitusState>(
         path = "/",
         version = Minitus.VERSION,
-        initialState = Minitus::initialState,
+        initialState = minitus::initialState,
     ) { request ->
-        Minitus.handle(
-            request = request,
-            dictionary = dictionary,
-        )
+        minitus.handle(request)
     }
 }

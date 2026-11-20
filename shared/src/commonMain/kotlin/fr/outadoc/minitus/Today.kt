@@ -16,6 +16,6 @@ private val tz: TimeZone by lazy {
 }
 
 /**
- * Renvoie la date du jour dans le fuseau horaire du jeu.
+ * Renvoie la date du jour selon cette horloge, dans le fuseau horaire du jeu.
  */
-fun today(): LocalDate = Clock.System.now().toLocalDateTime(tz).date
+internal fun Clock.today(): LocalDate = now().toLocalDateTime(tz).date
