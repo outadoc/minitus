@@ -30,16 +30,13 @@ npx wrangler login
 npm run deploy  # compile le service et le déploie sur votre compte Cloudflare
 ```
 
-Le workflow GitHub Actions `Deploy Cloudflare Worker` fait la même chose depuis `main`. Pour
-l'activer :
+Le workflow GitHub Actions `Deploy Cloudflare Worker` fait la même chose à chaque push sur
+`main`. Il a besoin de :
 
 1. Dans **Settings → Environments**, créez un environnement `production`. Vous pouvez y
    limiter les branches de déploiement à `main`, ou exiger une validation manuelle.
 2. Ajoutez-y les secrets d'environnement `CLOUDFLARE_API_TOKEN` (jeton d'API avec la
    permission « Workers Scripts: Edit ») et `CLOUDFLARE_ACCOUNT_ID`.
-3. Pour déployer à chaque push sur `main`, créez la variable **de dépôt** `DEPLOY_WORKER`
-   avec la valeur `true`. Elle doit rester au niveau du dépôt : GitHub évalue la condition
-   d'un job avant de charger son environnement.
 
 Le workflow peut aussi être lancé à la main depuis l'onglet Actions.
 
